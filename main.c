@@ -25,7 +25,7 @@
 //Ïà¹ØIO: P0.6/P0.7/P1.6/P1.7/P2.1/P2.2
 //        P2.3/P2.7/P3.7/P4.2/P4.4/P4.5 
  
- 
+u8 button_state = NO_BTN_DOWN; 
 
 void main()
 {

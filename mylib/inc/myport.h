@@ -73,7 +73,15 @@
 
 
 
+// 下面是一些关于IO动作的定义
+#define BTN_IS_OPEN()			IS_LOW(I_OPEN_SINGAL)
+#define BTN_IS_FORCE_OPEN()		IS_LOW(I_FORCE_START_SINGAL)
 
 
 
+// 定义IO口状态
+#define NO_BTN_DOWN		0x00
+#define START_BTN_DOWN	0x01
+#define STOP_BTN_DOWN	0x02
+#define FORCE_START_BTN_DOWN 0x03
 #endif
