@@ -1,2 +1,2 @@
 # Beer-inspecting-line
-The project is designed for a beer inspecting line,which is based on the MCU(STC15 series)
+	The project is used to backup our codes,it can not be used in commerce.
