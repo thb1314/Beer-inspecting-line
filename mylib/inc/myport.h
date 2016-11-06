@@ -17,7 +17,7 @@
  
 #ifndef __MYPORT_H_
 #define __MYPORT_H_
-
+#include "mytype.h"
 
 // 入口光电
 #define I_GATE_PHOTOELECTRIC_SENSOR		P00
@@ -74,14 +74,28 @@
 
 
 // 下面是一些关于IO动作的定义
-#define BTN_IS_OPEN()			IS_LOW(I_OPEN_SINGAL)
-#define BTN_IS_FORCE_OPEN()		IS_LOW(I_FORCE_START_SINGAL)
+#define B_IS_START_BTN_DOWN()			IS_LOW(I_OPEN_SINGAL)
+#define B_IS_FORCE_START_BTN_DOWN()		IS_LOW(I_FORCE_START_SINGAL)
+#define B_IS_STOP_BTN_DOWN()			IS_LOW(I_STOP_SINGAL)
+#define B_IS_FORCE_STOP_BTN_DOWN()		IS_LOW(I_FORCE_STOP_SINGAL)
+#define B_IS_CLOSE_BTN_DOWN()			IS_LOW(I_CLOSE_SINGAL)
 
+// 系统按钮状态标志
+extern u8 bdata button_state;
+extern bit is_btn_state_update;
+// 按钮状态标志位
+#define NO_BTN_DOWN				0x00
+#define START_BTN_DOWN			0x01
+#define STOP_BTN_DOWN			0x02
+#define FORCE_START_BTN_DOWN	0x04
+#define FORCE_STOP_BTN_DOWN		0x08
+#define CLOSE_BTN_DOWN			0x10
 
-
-// 定义IO口状态
-#define NO_BTN_DOWN		0x00
-#define START_BTN_DOWN	0x01
-#define STOP_BTN_DOWN	0x02
-#define FORCE_START_BTN_DOWN 0x03
+#define IS_BTN_UPDATE()			(IS_HIGH(is_btn_state_update))					
+#define CLR_BTN_UPDATE()		(CLR_PORT(is_btn_state_update))
+#define SET_BTN_UPDATE()		(CLR_PORT(is_btn_state_update))
+//检测按钮状态
+extern void CheckBtn(void);
+//初始化端口
+extern void InitPort(void);
 #endif
