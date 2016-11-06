@@ -39,7 +39,36 @@
 // 停止按键（对应于开始或强制启动）
 #define I_STOP_SINGAL					P20
 // 射线源打开检查
-#define I_ray_OPEN
+#define I_RAY_OPEN_CHECK				P21
+// 急停按键
+#define I_FORCE_STOP_SINGAL				P22
+
+// 射线源开关控制端（低电平打不开）
+#define O_RAY_CONTROL					P23
+
+
+// 485控制端1
+#define O_485_DIR1						P44
+// 485控制端2
+#define O_485_DIR2						P45
+// 踢废退
+#define O_FILTER_MOTOR_BACK				P60
+// 踢废进
+#define O_FILTER__MOTOR_FORWARD			P61
+// 关机信号输出（继电器）
+#define O_CLOSE_SYSTEM					P62
+//	一级报警输出						
+#define O_FIRST_ALARM_WARNING			P63
+// 停止输送
+#define O_STOP_DELIVER					P64
+// 射线输出
+#define O_RAY_OUTPUT					P65
+// 开输送
+#define O_START_DELIVER					P66
+// 接收箱电源输出
+#define O_RECEIVEBOX_POWER_OUTPUT		P67
+// 二级报警输出
+#define O_SECOND_ALARM_WARNING			P70
 
 
 
