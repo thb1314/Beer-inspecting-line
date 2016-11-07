@@ -33,7 +33,7 @@ void main()
 
 
 // 系统初始化函数
-void SystenInit(void)
+void SystemInit(void)
 {
 
 	
