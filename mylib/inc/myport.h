@@ -100,7 +100,6 @@
 
 // 系统按钮状态标志
 extern volatile u8 button_state;
-extern volatile u8 temp_btn_state;
 //检测按钮状态
 extern void CheckBtn(void);
 //初始化端口

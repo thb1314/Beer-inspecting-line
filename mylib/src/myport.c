@@ -3,8 +3,6 @@
 #include "delay.h"
 
 volatile u8 button_state = NO_BTN_DOWN; 
-
-volatile u8 temp_btn_state = NO_BTN_DOWN;
 // 初始化端口
 void InitPort(void)
 {
@@ -37,7 +35,8 @@ void InitPort(void)
 // 检测按钮状态 可以防止重复按下
 void CheckBtn(void)
 {
-
+	u8 tmp = NO_BTN_DOWN;
+	u8 temp_btn_state = NO_BTN_DOWN;
 	if( B_IS_STOP_BTN_DOWN())
 	{
 		temp_btn_state = STOP_BTN_DOWN;
@@ -64,28 +63,32 @@ void CheckBtn(void)
 		return;
 	// 延时消抖
 	delay_ms(10);
-
+	
 	if(B_IS_STOP_BTN_DOWN())
 	{
-		button_state = STOP_BTN_DOWN;
+		tmp = STOP_BTN_DOWN;
 	}
 	else if(B_IS_FORCE_START_BTN_DOWN())
 	{
-		button_state = FORCE_START_BTN_DOWN;
+		tmp = FORCE_START_BTN_DOWN;
 	}
 	else if(B_IS_FORCE_STOP_BTN_DOWN())
 	{
-		button_state = FORCE_STOP_BTN_DOWN;
+		tmp = FORCE_STOP_BTN_DOWN;
 	}
 	else if( B_IS_CLOSE_BTN_DOWN())
 	{
-		button_state = CLOSE_BTN_DOWN;
+		tmp = CLOSE_BTN_DOWN;
 	}
 	else
 	{
 		// 没有按键按下
 		return;
 	}
+	//如果和状态和原来的不同 说明是干扰
+	if(tmp != temp_btn_state)
+		return;
 	//更新按键状态
+	button_state = tmp;
 	SET_BTN_UPDATE(button_state);
 }
