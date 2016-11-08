@@ -19,14 +19,17 @@
 #include "myport.h"
 #include "mytype.h"
 #include "serial_cmd.h"
- 
+#include "exit.h"
+#include "event.h"
 
 void main()
 {
-	SystenInit();
+	SystemInit();
 	while(1)
 	{
-		
+		CheckBtn();
+		UpdateEvent();
+		HandleEvent();
 	}
 }
 
@@ -37,7 +40,17 @@ void SystemInit(void)
 {
 
 	
-	
+	//初始化IO口
 	InitPort();
+	//初始化外部中断
+	InitExit();
+	
+	//初始化串口
+	
+	//初始化定时器
+	
+	
+	//开启总中断
+	EA = 1;
 	
 }
