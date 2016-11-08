@@ -16,7 +16,7 @@
 
 #ifndef __DELAY_H__
 #define __DELAY_H__
-#include "myport.h"
+#include "mytype.h"
 
 /**
  * ÑÓÊ±º¯Êýms¼¶
