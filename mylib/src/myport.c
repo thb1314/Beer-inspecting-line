@@ -1,8 +1,10 @@
 #include "myport.h"
- 
-u8 button_state = NO_BTN_DOWN; 
-bit is_btn_state_update button_state^7;
-u8 temp_state = NO_BTN_DOWN;
+#include <STC15F2K60S2.H>
+#include "delay.h"
+
+volatile u8 button_state = NO_BTN_DOWN; 
+
+volatile u8 temp_btn_state = NO_BTN_DOWN;
 // 初始化端口
 void InitPort(void)
 {
@@ -35,45 +37,35 @@ void InitPort(void)
 // 检测按钮状态 可以防止重复按下
 void CheckBtn(void)
 {
-	if(B_IS_START_BTN_DOWN())
+
+	if( B_IS_STOP_BTN_DOWN())
 	{
-		temp_state = START_BTN_DOWN;
-		
-	}
-	else if( B_IS_STOP_BTN_DOWN())
-	{
-		temp_state = STOP_BTN_DOWN;
+		temp_btn_state = STOP_BTN_DOWN;
 	}
 	else if(B_IS_FORCE_START_BTN_DOWN())
 	{
-		temp_state = FORCE_START_BTN_DOWN;
+		temp_btn_state = FORCE_START_BTN_DOWN;
 	}
 	else if(B_IS_FORCE_STOP_BTN_DOWN())
 	{
-		temp_state = FORCE_STOP_BTN_DOWN;
+		temp_btn_state = FORCE_STOP_BTN_DOWN;
 	}
 	else if( B_IS_CLOSE_BTN_DOWN())
 	{
-		temp_state = CLOSE_BTN_DOWN;
+		temp_btn_state = CLOSE_BTN_DOWN;
 	}
 	else
 	{
 		// 没有按键按下
 		return;
 	}
-	//可能会有按键按下
-	//取消之前的按键更新
-	CLR_BTN_UPDATE();
-	if(button_state == temp_state) 
+	//避免重复按键操作
+	if((button_state&(~BTN_UPDATE)) == temp_btn_state) 
 		return;
 	// 延时消抖
 	delay_ms(10);
-	if(B_IS_START_BTN_DOWN())
-	{
-		button_state = START_BTN_DOWN;
-		
-	}
-	else if( B_IS_STOP_BTN_DOWN())
+
+	if(B_IS_STOP_BTN_DOWN())
 	{
 		button_state = STOP_BTN_DOWN;
 	}
@@ -95,5 +87,5 @@ void CheckBtn(void)
 		return;
 	}
 	//更新按键状态
-	SET_BTN_UPDATE();
+	SET_BTN_UPDATE(button_state);
 }

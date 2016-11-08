@@ -17,22 +17,25 @@
  
 #ifndef __MYPORT_H_
 #define __MYPORT_H_
+
+
 #include "mytype.h"
 
+#include "myfunc.h"
 // 入口光电
 #define I_GATE_PHOTOELECTRIC_SENSOR		P00
-// 计数光电
+// 计数光电(外部中断1)
 #define I_COUNT_PHOTOELECTRIC_SENSOR	P33
 // 剔除废品光电
 #define I_FILTER_PHOTOELECTRIC_SENSOR	P01
 // 阻塞光电
 #define I_BLOCK_PHOTOELECTRIC_SENSOR	P02
 
-// 门开报警信号
+// 门开报警信号(外部中断0)
 #define I_GATE_OPEN_WARNING				P32
-// 关机信号
+// 关机信号(外部中断2)
 #define I_CLOSE_SINGAL					P36
-// 开机信号
+// 开机信号(外部中断3)
 #define I_OPEN_SINGAL					P37
 // 强制启动信号
 #define I_FORCE_START_SINGAL			P05
@@ -80,9 +83,6 @@
 #define B_IS_FORCE_STOP_BTN_DOWN()		IS_LOW(I_FORCE_STOP_SINGAL)
 #define B_IS_CLOSE_BTN_DOWN()			IS_LOW(I_CLOSE_SINGAL)
 
-// 系统按钮状态标志
-extern u8 bdata button_state;
-extern bit is_btn_state_update;
 // 按钮状态标志位
 #define NO_BTN_DOWN				0x00
 #define START_BTN_DOWN			0x01
@@ -90,10 +90,17 @@ extern bit is_btn_state_update;
 #define FORCE_START_BTN_DOWN	0x04
 #define FORCE_STOP_BTN_DOWN		0x08
 #define CLOSE_BTN_DOWN			0x10
+#define BTN_UPDATE				0x80
 
-#define IS_BTN_UPDATE()			(IS_HIGH(is_btn_state_update))					
-#define CLR_BTN_UPDATE()		(CLR_PORT(is_btn_state_update))
-#define SET_BTN_UPDATE()		(CLR_PORT(is_btn_state_update))
+#define IS_BTN_UPDATE(x)			((x)&BTN_UPDATE)					
+#define CLR_BTN_UPDATE(x)		((x) &= ~BTN_UPDATE)
+#define SET_BTN_UPDATE(x)		((x) |= BTN_UPDATE)
+
+
+
+// 系统按钮状态标志
+extern volatile u8 button_state;
+extern volatile u8 temp_btn_state;
 //检测按钮状态
 extern void CheckBtn(void);
 //初始化端口
