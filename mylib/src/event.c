@@ -1,5 +1,8 @@
 #include "event.h"
 #include "myport.h"
+#include "tim.h"
+#include <STC15F2K60S2.H>
+
 
 volatile u16 event = NO_EVENT;
 
@@ -39,5 +42,18 @@ void UpdateEvent()
 
 void HandleEvent(void)
 {
+	if(IS_Event_Valid(CLOSE_BTN_DOWN))
+	{
+		CLR_Event(CLOSE_BTN_DOWN);
+		// 开启定时器
+		START_TIMER0();
+		//开启标志位
+		SET_PORT(is_start_check_close_btn);
+	}
+	
+	
+	
+	
+	
 	
 }

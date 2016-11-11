@@ -34,6 +34,8 @@ typedef enum  {
 #define SET_Event(event_type) (event |= event_type)
 //清除时间
 #define CLR_Event(event_type) (event &= ~event_type)
+//判断事件状态
+#define IS_Event_Valid(event_type) (event & event_type)
 extern void UpdateEvent(void);
 extern void HandleEvent(void);
 #endif
