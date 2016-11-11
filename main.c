@@ -21,6 +21,7 @@
 #include "serial_cmd.h"
 #include "exit.h"
 #include "event.h"
+#include "tim.h"
 
 void main()
 {
@@ -48,7 +49,9 @@ void SystemInit(void)
 	//初始化串口
 	
 	//初始化定时器
-	
+	InitTimer0();
+	//开启定时器
+	START_TIMER0();
 	
 	//开启总中断
 	EA = 1;
