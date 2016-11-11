@@ -17,8 +17,21 @@
  
 #ifndef __TIM_H_
 #define __TIM_H_
+#include "myfosc.h"
+#include "myfunc.h"
 
+//定时的秒数 (us)
+#define T0_US (10)
+#define T0MS (65536-FOSC/12/1000*T0_US)
+
+#define START_TIMER0() SET_PORT(TR0)
+#define COLSE_TIMER0() CLR_PORT(TR0)
 //初始化定时器 分配优先级
-void InitTimer(void);
+void InitTimer0(void);
+void tim0_isr(void);
 
+
+
+// 一些开启任务的标志位
+extern bit is_start_check_close_btn;
 #endif
