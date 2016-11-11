@@ -1,4 +1,5 @@
 #include "myport.h"
+#include "tim.h"
 #include <STC15F2K60S2.H>
 #include "delay.h"
 
@@ -92,3 +93,35 @@ void CheckBtn(void)
 	button_state = tmp;
 	SET_BTN_UPDATE(button_state);
 }
+
+// 检测按键事件大于n个基准 时基
+void CheckIsClose(void)
+{
+	static u16 timer = 0;
+	
+	if(B_IS_CLOSE_BTN_DOWN())
+	{
+		timer++;
+	}
+	else
+	{
+		// 取消定时器
+		CLR_PORT(is_start_check_close_btn);
+		//取消标志位
+		return;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+

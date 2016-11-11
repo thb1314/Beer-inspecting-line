@@ -104,4 +104,6 @@ extern volatile u8 button_state;
 extern void CheckBtn(void);
 //初始化端口
 extern void InitPort(void);
+//检测关机按钮
+extern void CheckIsClose(void);
 #endif
