@@ -4,6 +4,7 @@
 #include "delay.h"
 
 volatile u8 button_state = NO_BTN_DOWN; 
+
 // 初始化端口
 void InitPort(void)
 {
@@ -94,31 +95,7 @@ void CheckBtn(void)
 	SET_BTN_UPDATE(button_state);
 }
 
-// 检测按键事件大于n个基准 时基
-void CheckIsClose(void)
-{
-	static u16 timer = 0;
-	
-	if(B_IS_CLOSE_BTN_DOWN())
-	{
-		timer++;
-	}
-	else
-	{
-		// 取消定时器
-		CLR_PORT(is_start_check_close_btn);
-		//取消标志位
-		return;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-}
+
 
 
 
