@@ -20,8 +20,8 @@
 #include "myfosc.h"
 #include "myfunc.h"
 
-//定时的秒数 (us)
-#define T0_US (10)
+//定时的秒数 (ms)
+#define T0_US (1)
 #define T0MS (65536-FOSC/12/1000*T0_US)
 
 #define START_TIMER0() SET_PORT(TR0)
