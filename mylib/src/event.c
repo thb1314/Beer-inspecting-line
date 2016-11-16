@@ -1,7 +1,15 @@
 #include "event.h"
 #include "myport.h"
 #include "tim.h"
+#include "task.h"
 #include <STC15F2K60S2.H>
+
+
+//创建一个任务 在关闭按键触发时启动
+Task TskChkIsTrueClose;
+void TskChkIsTrueCloseCallBack(void*);
+
+
 
 
 volatile u16 event = NO_EVENT;
@@ -44,16 +52,35 @@ void HandleEvent(void)
 {
 	if(IS_Event_Valid(CLOSE_BTN_DOWN))
 	{
+		TskChkIsTrueClose.timer = 50;
+		TskChkIsTrueClose.type = 
+		TskChkIsTrueClose.isstart = 1;
+		TskChkIsTrueClose.function = TskChkIsTrueCloseCallBack; 
+		TaskInit(&TskChkIsTrueClose);
 		CLR_Event(CLOSE_BTN_DOWN);
-		// 开启定时器
-		START_TIMER0();
-		//开启标志位
-		SET_PORT(is_start_check_close_btn);
 	}
 	
 	
-	
-	
-	
-	
+}
+
+
+
+// 检测按钮的回调函数
+void TskChkIsTrueCloseCallBack(void* ptr)
+{
+	Task* mytask = (Task*)(ptr);
+	static u8 timer = 0;
+	if(B_IS_CLOSE_BTN_DOWN())
+	{
+		timer++;
+		if(timer >= 60)
+		{
+			//执行关机操作
+		}
+	}
+	else
+	{
+		timer = 0;
+		TaskDelete(&TskChkIsTrueClose);
+	}
 }
