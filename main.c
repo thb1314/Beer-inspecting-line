@@ -24,9 +24,7 @@
 #include "tim.h"
 #include "uart.h"
 #include "task.h"
-
-
-
+#include "delay.h"
 
 
 
@@ -35,7 +33,7 @@
 void main()
 {
 	SystemInit();
-	Uart1Write("hello,stc\n",10);
+
 	while(1)
 	{
 		CheckBtn();
@@ -50,27 +48,16 @@ void main()
 void SystemInit(void)
 {
 
-	// 创建一个任务
-	
-	
 	//初始化IO口
 	InitPort();
 	//初始化外部中断
 	InitExit();
-	
-	//初始化串口
-	
 	//初始化定时器
 	InitTimer0();
-	//开启定时器
-	START_TIMER0();
-	
 	//初始化串口1
 	Uart1Init();
 	//开启总中断
 	SET_PORT(EA);
-	
-	
 	
 }
 
