@@ -42,6 +42,7 @@ u8 TaskDelete(Task* mytask)
 			//更新任务ID
 			taskbuffer.task[i]->id = i;
 		}
+		
 	}
 	taskbuffer.length--;
 	
