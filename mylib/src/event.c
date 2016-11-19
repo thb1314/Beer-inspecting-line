@@ -1,6 +1,7 @@
 #include "event.h"
 #include "myport.h"
 #include "tim.h"
+#include "uart.h"
 #include "task.h"
 #include <STC15F2K60S2.H>
 
@@ -53,7 +54,7 @@ void HandleEvent(void)
 	if(IS_Event_Valid(CLOSE_BTN_DOWN))
 	{
 		TskChkIsTrueClose.timer = 50;
-		TskChkIsTrueClose.type = 
+		TskChkIsTrueClose.type = DELAY_TASK;
 		TskChkIsTrueClose.isstart = 1;
 		TskChkIsTrueClose.function = TskChkIsTrueCloseCallBack; 
 		TaskInit(&TskChkIsTrueClose);
@@ -76,10 +77,12 @@ void TskChkIsTrueCloseCallBack(void* ptr)
 		if(timer >= 60)
 		{
 			//执行关机操作
+			Uart1Write("ok\n",3);
 		}
 	}
 	else
 	{
+		Uart1Write("fail\n",5);
 		timer = 0;
 		TaskDelete(&TskChkIsTrueClose);
 	}
