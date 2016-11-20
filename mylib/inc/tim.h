@@ -19,10 +19,17 @@
 #define __TIM_H_
 #include "myfosc.h"
 #include "myfunc.h"
+#include "uart.h"
 
 //定时的秒数 (ms)
-#define T0_US (1)
-#define T0MS (65536-FOSC/1000*T0_US)
+#define T0_MS (1)
+
+
+#define T0MS (65536-FOSC/1000*T0_MS)
+
+
+
+
 
 #define START_TIMER0() SET_PORT(TR0)
 #define COLSE_TIMER0() CLR_PORT(TR0)
@@ -30,8 +37,40 @@
 void InitTimer0(void);
 void tim0_isr(void);
 
+#ifdef UART1
 
+
+#define T3_MS (1)
+#define T3MS (65536 - (FOSC/4/UART_BAUDRATE))
+//#define T3MS  (65536-FOSC/1000*T3_MS)
+//初始化定时器3
+void InitTimer3(void);
+
+#define START_TIMER3() (T4T3M |= 0x08)
+#define CLOSE_TIMER3() (T4T3M &= ~0x08)
+#define IS_START_TIMER3() (T4T3M &= 0x08)
+
+#endif
+
+
+#ifdef UART2
+
+
+#define T4_MS (1)
+#define T4MS (65536 - (FOSC/4/UART_BAUDRATE))
+//#define T4MS  (65536-FOSC/1000*T3_MS)
+
+//初始化定时器4
+void InitTimer4(void);
+
+#define START_TIMER4() (T4T3M |= 0x80)
+#define CLOSE_TIMER4() (T4T3M &= ~0x80)
+#define IS_START_TIMER4() (T4T3M &= 0x80)
+
+#endif
 
 // 一些开启任务的标志位
 extern bit is_start_check_close_btn;
+
+
 #endif
