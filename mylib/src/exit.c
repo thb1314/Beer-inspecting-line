@@ -43,8 +43,29 @@ void exint3() interrupt 11
 	//更新按键状态
 	button_state = tmp;
 	SET_BTN_UPDATE(button_state);
-	
+}
+// 关机按钮进外部中断2
+void exint2() interrupt 10
+{
+	u8 tmp = NO_BTN_DOWN;
+	u8 temp_btn_state = NO_BTN_DOWN;
+
+
+	if(B_IS_CLOSE_BTN_DOWN())
+	{
+		temp_btn_state = CLOSE_BTN_DOWN;
+	}
+	delay_ms(5);
+	if(B_IS_CLOSE_BTN_DOWN())
+	{
+		tmp = CLOSE_BTN_DOWN;
+	}
+	//如果和状态和原来的不同 说明是干扰
+	if(tmp != temp_btn_state)
+		return;
+	//更新按键状态
+	button_state = tmp;
+	SET_BTN_UPDATE(button_state);
 
 }
-
 
