@@ -75,6 +75,10 @@
 
 
 
+#define O_RS485_CTL_1					P44
+#define O_RS485_CTL_2					P45
+
+
 
 // 下面是一些关于IO动作的定义
 #define B_IS_START_BTN_DOWN()			IS_LOW(I_OPEN_SINGAL)

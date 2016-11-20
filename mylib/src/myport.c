@@ -5,6 +5,9 @@
 
 volatile u8 button_state = NO_BTN_DOWN; 
 
+
+
+
 // 初始化端口
 void InitPort(void)
 {
@@ -30,6 +33,8 @@ void InitPort(void)
 	P4M1 &= 0xCB;
 	P4M0 &= 0xCB;
 	
+	
+	
 	//初始化按钮状态
 	button_state = NO_BTN_DOWN;
 }
@@ -51,10 +56,7 @@ void CheckBtn(void)
 	{
 		temp_btn_state = FORCE_STOP_BTN_DOWN;
 	}
-	else if( B_IS_CLOSE_BTN_DOWN())
-	{
-		temp_btn_state = CLOSE_BTN_DOWN;
-	}
+	
 	else
 	{
 		// 没有按键按下
@@ -77,10 +79,6 @@ void CheckBtn(void)
 	else if(B_IS_FORCE_STOP_BTN_DOWN())
 	{
 		tmp = FORCE_STOP_BTN_DOWN;
-	}
-	else if( B_IS_CLOSE_BTN_DOWN())
-	{
-		tmp = CLOSE_BTN_DOWN;
 	}
 	else
 	{
