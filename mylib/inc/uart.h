@@ -11,19 +11,31 @@
  *  作者: THB
  *  说明: 光棍节后开始写的，将串口一的波特率和串口二的波特率设置为一样
  *        这样串口一和串口二就共用定时器二
+ *		  
  *   
- *  修改日期: 
+ *  修改日期: 2016-11-20
  *  作者: 
- *  说明: 
+ *  说明: 增加了RS485和接收一帧数据
  ******************************************************************/ 
 #include "myfosc.h"
+#include "myport.h"
+
 
 #define UART1
+//#define UART2
+
+
 
 #define UART_BAUDRATE   57600       // set 
+// 一组数据帧超时时间基准
+#define UART_DATA_TIMEOUT 5
+
 
 #ifdef UART2
 
+// UART2用作485
+#define UART2_USE_RS485
+#define UART2_RS485_CTL_PORT O_RS485_CTL_2
 
 
 /*Define UART parity mode*/
@@ -46,8 +58,9 @@ extern bit uart2_bit9;
 extern bit uart2_flagRxd; 
 
 extern volatile unsigned char uart2_cntRxd;
+extern volatile unsigned char uart2_t_cntRxd;
 extern unsigned char uart2_bufRxd[UART2_MAX_COMCHAR_LEN];
-
+extern bit uart2_is_start_check_timer;
 
 
 /**
@@ -71,6 +84,13 @@ extern void Uart2Write(unsigned char *, unsigned char);
 #ifdef UART1
 
 
+
+
+// UART1用作485
+#define UART1_USE_RS485
+#define UART1_RS485_CTL_PORT O_RS485_CTL_1
+
+
 /*Define UART parity mode*/
 #define UART1_NONE_PARITY 0
 #define UART1_ODD_PARITY 1
@@ -85,8 +105,11 @@ extern void Uart2Write(unsigned char *, unsigned char);
 
 extern bit uart1_bit9;
 extern bit uart1_flagRxd; 
+extern bit uart1_is_start_check_timer;
 
 extern volatile unsigned char uart1_cntRxd;
+extern volatile unsigned char uart1_t_cntRxd;
+
 extern unsigned char uart1_bufRxd[UART1_MAX_COMCHAR_LEN];
 
 
