@@ -19,15 +19,17 @@
 
 
 // 关于一些数据处理
-#define GET_LOW_8BIT(x) (u8(x))
-#define GET_HIGH_8BIT(x) (u8(x >> 8))
+#define GET_LOW_8BIT(x) ((u8)x)
+#define GET_HIGH_8BIT(x) ((u8)(x >> 8))
 
 // 关于IO口的高低电平的判定
 #define SET_PORT(x)		(x)=1
 #define CLR_PORT(x)		(x)=0
+#define CPL_PORT(x)		(x)=(~(x))
+
 #define IS_LOW(x)		(0 == (x))
 #define IS_HIGH(x)		(1 == (x))
-#define WATE_FOR_HIGH	while(IS_LOW(x))
-#define WATE_FOR_LOW	while(IS_HIGH(x))
+#define WATE_FOR_HIGH(x)	while(IS_LOW(x))
+#define WATE_FOR_LOW(x)	while(IS_HIGH(x))
 	
 #endif
