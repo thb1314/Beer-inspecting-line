@@ -41,7 +41,7 @@ typedef struct myTaskBuffer {
 } TaskBuffer;
 
 extern u8 TaskInit(Task*);
-extern TaskBuffer taskbuffer;
+extern volatile TaskBuffer taskbuffer;
 extern u8 TaskDelete(Task*);
 #endif
 
