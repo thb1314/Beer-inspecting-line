@@ -15,6 +15,7 @@
  ******************************************************************/
 #ifndef __EVENT_H__
 #define __EVENT_H__
+
 #include "mytype.h"
 //事件处理机制
 // 事件标志位
@@ -30,6 +31,7 @@ typedef enum  {
 	CLOSE_SYS_EVENT = 0x0010,
 	UART1_RCV_EVENT = 0x0020,
 	UART2_RCV_EVENT = 0x0040,
+	PC_HAVE_STARTED_EVENT = 0x0080,
 } EventType;
 
 //置位事件
