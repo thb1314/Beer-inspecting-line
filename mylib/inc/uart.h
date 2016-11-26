@@ -22,7 +22,7 @@
 
 
 #define UART1
-//#define UART2
+#define UART2
 
 
 
@@ -87,8 +87,8 @@ extern void Uart2Write(unsigned char *, unsigned char);
 
 
 // UART1用作485
-#define UART1_USE_RS485
-#define UART1_RS485_CTL_PORT O_RS485_CTL_1
+//#define UART1_USE_RS485
+//#define UART1_RS485_CTL_PORT O_RS485_CTL_1
 
 
 /*Define UART parity mode*/
@@ -128,6 +128,11 @@ extern void Uart1Rcv(void);
 extern void Uart1Write(unsigned char *, unsigned char);
 
 #endif
+
+
+//user add 
+#define UartWrite(x,y) Uart1Write(x,y)
+#define RS485Write(x,y) Uart2Write(x,y)
 
 
 #endif
