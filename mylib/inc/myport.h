@@ -28,8 +28,13 @@
 #define I_COUNT_PHOTOELECTRIC_SENSOR	P33
 // 剔除废品光电
 #define I_FILTER_PHOTOELECTRIC_SENSOR	P01
+// 严重阻塞光电
+#define I_SERIOUS_BLOCK_PHOTOELECTRIC_SENSOR	P02
 // 阻塞光电
-#define I_BLOCK_PHOTOELECTRIC_SENSOR	P02
+#define I_BLOCK_PHOTOELECTRIC_SENSOR	P03
+// 气压低报警信号
+#define I_LOW_PRESSURE_WARNING_SENSOR	P04
+// 
 
 // 门开报警信号(外部中断0)
 #define I_GATE_OPEN_WARNING				P32
@@ -46,7 +51,7 @@
 // 急停按键
 #define I_FORCE_STOP_SINGAL				P22
 
-// 射线源开关控制端（低电平打不开）
+// 射线源开关控制端（低电平打开）
 #define O_RAY_CONTROL					P23
 
 
@@ -55,7 +60,7 @@
 // 485控制端2
 #define O_485_DIR2						P45
 // 踢废退
-#define O_FILTER_MOTOR_BACK				P60
+#define O_FILTER_MOTOR_BACK				P75
 // 踢废进
 #define O_FILTER__MOTOR_FORWARD			P61
 // 关机信号输出（继电器）
@@ -69,7 +74,7 @@
 // 开输送
 #define O_START_DELIVER					P66
 // 接收箱电源输出
-#define O_RECEIVEBOX_POWER_OUTPUT		P67
+#define O_RECEIVEBOX_POWER_OUTPUT		P76
 // 二级报警输出
 #define O_SECOND_ALARM_WARNING			P70
 
@@ -86,6 +91,25 @@
 #define B_IS_STOP_BTN_DOWN()			IS_LOW(I_STOP_SINGAL)
 #define B_IS_FORCE_STOP_BTN_DOWN()		IS_LOW(I_FORCE_STOP_SINGAL)
 #define B_IS_CLOSE_BTN_DOWN()			IS_LOW(I_CLOSE_SINGAL)
+
+
+// 判断是否是严重阻塞
+#define S_IS_SERIOUS_BLOCK()			IS_LOW(I_SERIOUS_BLOCK_PHOTOELECTRIC_SENSOR)
+
+/*
+开始按钮按下去之后的动作
+*/
+//射线源上电
+#define OPEN_RAY_OUTPUT()				CLR_PORT(O_RAY_OUTPUT)
+//传感器上电
+#define OPEN_SENSOR()					CLR_PORT(O_RAY_OUTPUT)
+//探测器上电 rewrite
+#define OPEN_DETECTOR()					_nop_()
+//电磁阀上电 rewrite
+#define OPEN_SOLENOIDVALVE()			_nop_()
+//变频器打开(打开交流电机) rewrite
+#define OPEN_AC_MATOR()					_nop_()
+
 
 // 按钮状态标志位
 #define NO_BTN_DOWN				0x00
