@@ -1,6 +1,9 @@
 #ifndef __SERIAL_CMD_H
 #define __SERIAL_CMD_H
 
+#include "mytype.h"
+
+#define PROTOCOL_LENGTH (7)
 
 #define CMD_BYTE_HEADER				0x55,0xAA
 
@@ -28,7 +31,24 @@
 
 
 
+extern u8 code CMD_TEST[PROTOCOL_LENGTH];
+ 
+typedef struct 
+{
+	u16 header;
+	u8 cmd;
+	u8 election;
+	u16 dat;
+	u8 check_sum;
+} SERIAL_CMD;
 
+typedef union 
+{
+	SERIAL_CMD serial_struct;
+	u8 dat[7];
+} U_SERIAL_CMD;
 
+//extern volatile SERIAL_CMD serial_cmd_struct;
 
+//u8 SERIAL_CMD_STRUCT_Init(u8*);
 #endif
