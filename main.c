@@ -34,8 +34,11 @@ void main()
 {
 	SystemInit();
 	
-	P1M1 &= 0xFE;
-	P1M0 |= ~0xFE;
+	P0M1 &= ~0x01;
+	P0M1 |= 0x01;
+	
+	P6 = 0xFF;
+	P7 = 0xFF;
 	
 	
 	while(1)
@@ -46,10 +49,8 @@ void main()
 		UpdateEvent();
 		//处理事件
 		HandleEvent();
-		P10 = ~P10;
-		P60 = ~P60;
-		P70 = ~P70;
-		delay_ms(1000);
+
+
 
 	}
 }
@@ -67,9 +68,12 @@ void SystemInit(void)
 	//初始化定时器
 	InitTimer0();
 	//初始化串口
+	#ifdef UART1
 	Uart1Init();
-	//Uart2Init();
-	
+	#endif
+	#ifdef UART2
+	Uart2Init();
+	#endif
 	//开启总中断
 	SET_PORT(EA);
 	
