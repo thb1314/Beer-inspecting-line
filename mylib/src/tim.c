@@ -106,10 +106,15 @@ void tim0_isr(void) interrupt 1
 	
 	for(i = 0; i < tmp; i++)
 	{
+		
+
+		//如果有删除任务则应退出循环 防止重复进入删除任务
+		if(tmp != taskbuffer.length)
+			return;
 		if(taskbuffer.task[i]->isstart)
 		{
 			taskbuffer.task[i]->_timer++;
-			if(taskbuffer.task[i]->_timer == taskbuffer.task[i]->timer)
+			if(taskbuffer.task[i]->_timer >= taskbuffer.task[i]->timer)
 			{
 				// if the type equal  DELAY_TASK
 				if(DELAY_TASK == taskbuffer.task[i]->type)
@@ -119,7 +124,7 @@ void tim0_isr(void) interrupt 1
 				
 				taskbuffer.task[i]->_timer = 0;
 				// callback function
-				(*(taskbuffer.task[i]->function))(&taskbuffer.task[i]);
+				(*(taskbuffer.task[i]->function))(taskbuffer.task[i]);
 			}
 
 		}
