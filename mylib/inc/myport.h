@@ -77,8 +77,18 @@
 #define O_RECEIVEBOX_POWER_OUTPUT		P76
 // 二级报警输出
 #define O_SECOND_ALARM_WARNING			P70
+// 上位机电源控制
+#define O_CTL_PC_POWER					P73
+
+#define I_SENSOR1						I_GATE_PHOTOELECTRIC_SENSOR
+#define I_SENSOR2						I_COUNT_PHOTOELECTRIC_SENSOR
+#define I_SENSOR3						I_FILTER_PHOTOELECTRIC_SENSOR
+#define I_SENSOR4						I_SERIOUS_BLOCK_PHOTOELECTRIC_SENSOR
+#define I_SENSOR5						I_BLOCK_PHOTOELECTRIC_SENSOR
 
 
+#define IS_SENSOR_OK(I_SENSOR)			IS_HIGH(I_SENSOR)		
+#define IS_SENSOR_TRIGGER(I_SENSOR)		IS_LOW(I_SENSOR)	
 
 #define O_RS485_CTL_1					P44
 #define O_RS485_CTL_2					P45
@@ -99,16 +109,47 @@
 /*
 开始按钮按下去之后的动作
 */
-//射线源上电
-#define OPEN_RAY_OUTPUT()				CLR_PORT(O_RAY_OUTPUT)
+//射线源上电(射线源开关控制)
+#define OPEN_RAY_OUTPUT()				CLR_PORT(O_RAY_CONTROL)
+//射线源下电
+#define CLOSE_RAY_OUTPUT()				SET_PORT(O_RAY_CONTROL)
 //传感器上电
 #define OPEN_SENSOR()					CLR_PORT(O_RAY_OUTPUT)
-//探测器上电 rewrite
-#define OPEN_DETECTOR()					_nop_()
-//电磁阀上电 rewrite
+//传感器下电
+#define CLOSE_SENSOR()					SET_PORT(O_RAY_OUTPUT)
+
+
+//探测器上电
+#define OPEN_DETECTOR()					CLR_PORT(O_RAY_OUTPUT)
+//探测器下电
+#define CLOSE_DETECTOR()				SET_PORT(O_RAY_OUTPUT)
+
+
+
+//电磁阀上电
 #define OPEN_SOLENOIDVALVE()			_nop_()
+//电磁阀下电
+#define CLOSE_SOLENOIDVALVE()			_nop_()
 //变频器打开(打开交流电机) rewrite
 #define OPEN_AC_MATOR()					_nop_()
+
+
+//打开阻塞报警
+#define OPEN_BLOCK_WARNING()			CLR_PORT(O_FIRST_ALARM_WARNING)
+//停止阻塞报警
+#define STOP_BLOCK_WARNING()			SET_PORT(O_FIRST_ALARM_WARNING)
+
+
+//打开严重阻塞报警
+#define OPEN_SERIOUS_BLOCK_WARNING()	CLR_PORT(O_SECOND_ALARM_WARNING)
+//停止严重阻塞报警
+#define STOP_SERIOUS_BLOCK_WARNING()	SET_PORT(O_SECOND_ALARM_WARNING)
+
+
+//PC 
+#define CLOSE_PC_POWER()				SET_PORT(O_CTL_PC_POWER)
+#define OPEN_PC_POWER()					CLR_PORT(O_CTL_PC_POWER)
+
 
 
 // 按钮状态标志位
@@ -134,4 +175,18 @@ extern void CheckBtn(void);
 extern void InitPort(void);
 //检测关机按钮
 extern void CheckIsClose(void);
+
+typedef enum  {
+	NOT_START = 0x00,
+	NORMAL_START = 0x01,
+	FORCE_START = 0x02,
+	NORMAL_STOP = 0x03,
+	FORCE_STOP = 0x04,
+	NORMAL_CLOSE = 0x05,
+	SERIOUS_BLOCK = 0x06,
+} SysState;
+//系统状态
+extern SysState sys_state;
+extern bit is_serious_block;
+
 #endif
